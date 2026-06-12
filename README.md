@@ -4,7 +4,7 @@ Sitio web oficial de **AM TECH Security** (Panamá): seguridad física digital, 
 
 **Protegemos | Conectamos | Aseguramos**
 
-🌐 **Sitio en vivo:** https://jmoreira2412.github.io/amtech-security-web/
+🌐 **Sitio en vivo:** https://www.amtechsecurity.net (también https://jmoreira2412.github.io/amtech-security-web/)
 
 ## Estructura
 
