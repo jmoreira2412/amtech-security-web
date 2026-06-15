@@ -1,0 +1,38 @@
+rules_version = '2';
+
+// ============================================================
+//  Reglas de Storage — AM TECH Security
+// ============================================================
+//  · Lectura pública de las fotos de la galería.
+//  · Subida/borrado SOLO para los correos de la lista blanca.
+//  · Solo imágenes, máximo 8 MB por archivo (el panel ya las
+//    comprime antes de subir).
+//  La lista debe coincidir con ADMIN_EMAILS en firebase-config.js
+//  y con firestore.rules.
+// ============================================================
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function esAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          // >>> REEMPLAZAR con los correos autorizados <<<
+          "REEMPLAZAR@amtechsecurity.net"
+        ];
+    }
+
+    match /projects/{projectId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if esAdmin()
+        && request.resource.size < 8 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if esAdmin();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

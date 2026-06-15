@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de administración — AM TECH Security</title>
+<link rel="icon" type="image/png" href="assets/logo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --naranja:#FF7A00;--naranja-claro:#FFA040;--rojo-naranja:#E8470A;
+  --negro:#0C0D10;--negro-2:#13151A;--negro-3:#1B1E25;
+  --borde:rgba(255,255,255,.08);--texto:#E8EAEE;--texto-suave:#9AA1AC;
+  --grad:linear-gradient(135deg,#FFA040 0%,#FF7A00 45%,#E8470A 100%);
+  --radio:16px;--ok:#34D399;--err:#F87171;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--negro);color:var(--texto);line-height:1.6;min-height:100vh}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--naranja);text-decoration:none}
+.contenedor{width:min(960px,92%);margin:0 auto}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  height:64px;padding:0 5%;background:rgba(12,13,16,.9);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--borde);
+}
+.topbar .marca{display:flex;align-items:center;gap:.6rem;font-weight:800}
+.topbar .marca img{width:34px;height:34px}
+.topbar .marca small{display:block;font-size:.62rem;font-weight:600;letter-spacing:.2em;color:var(--texto-suave);text-transform:uppercase}
+.topbar-user{display:flex;align-items:center;gap:.9rem;font-size:.88rem;color:var(--texto-suave)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--grad);color:#fff;font-weight:700;font-size:.92rem;border:none;padding:.7rem 1.4rem;border-radius:11px;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 22px rgba(255,122,0,.3)}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn-sec{background:none;border:1px solid var(--borde);color:var(--texto);box-shadow:none;font-weight:600}
+.btn-sec:hover{border-color:var(--naranja)}
+.btn-peligro{background:none;border:1px solid rgba(248,113,113,.4);color:var(--err);box-shadow:none;font-weight:600}
+.btn-peligro:hover{background:rgba(248,113,113,.1)}
+.btn-chico{padding:.5rem 1rem;font-size:.84rem}
+
+/* Vistas */
+.vista{display:none}
+.vista.activa{display:block}
+main{padding:48px 0 80px}
+
+/* Login / no autorizado */
+.centro{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:2rem}
+.tarjeta-login{
+  background:var(--negro-2);border:1px solid var(--borde);border-radius:var(--radio);
+  padding:2.8rem 2.4rem;text-align:center;max-width:420px;width:100%;box-shadow:0 0 70px rgba(255,122,0,.06);
+}
+.tarjeta-login img.logo{width:74px;margin:0 auto 1.4rem}
+.tarjeta-login h1{font-size:1.4rem;font-weight:800;margin-bottom:.5rem}
+.tarjeta-login p{color:var(--texto-suave);font-size:.95rem;margin-bottom:1.8rem}
+.btn-google{
+  display:inline-flex;align-items:center;gap:.7rem;width:100%;justify-content:center;
+  background:#fff;color:#1f1f1f;font-weight:600;font-size:.98rem;border:none;
+  padding:.85rem 1.4rem;border-radius:11px;transition:filter .2s;
+}
+.btn-google:hover{filter:brightness(.95)}
+.btn-google svg{width:20px;height:20px}
+.aviso-err{color:var(--err);font-size:.9rem;margin-top:1rem;min-height:1.2em}
+
+/* Dashboard */
+.dash-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.dash-head h1{font-size:1.7rem;font-weight:800}
+.dash-head p{color:var(--texto-suave);font-size:.92rem}
+.lista-proyectos{display:flex;flex-direction:column;gap:1rem}
+.fila{
+  display:flex;align-items:center;gap:1.1rem;background:var(--negro-2);
+  border:1px solid var(--borde);border-radius:var(--radio);padding:1rem 1.2rem;
+}
+.fila-img{width:84px;height:60px;flex-shrink:0;border-radius:9px;overflow:hidden;background:var(--negro-3)}
+.fila-img img{width:100%;height:100%;object-fit:cover}
+.fila-info{flex:1;min-width:0}
+.fila-info h3{font-size:1.02rem;font-weight:700;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fila-info span{font-size:.82rem;color:var(--texto-suave)}
+.fila-acciones{display:flex;gap:.6rem;flex-shrink:0}
+.vacio{text-align:center;color:var(--texto-suave);padding:3rem 1rem;border:1px dashed var(--borde);border-radius:var(--radio)}
+
+/* Editor */
+.editor{background:var(--negro-2);border:1px solid var(--borde);border-radius:var(--radio);padding:2rem}
+.editor h2{font-size:1.3rem;font-weight:800;margin-bottom:1.5rem}
+.campo{margin-bottom:1.4rem}
+.campo label{display:block;font-size:.88rem;font-weight:600;margin-bottom:.5rem}
+.campo input[type=text],.campo textarea{
+  width:100%;background:var(--negro);border:1px solid var(--borde);border-radius:10px;
+  color:var(--texto);font-family:inherit;font-size:.95rem;padding:.8rem 1rem;transition:border-color .2s;
+}
+.campo input[type=text]:focus,.campo textarea:focus{outline:none;border-color:var(--naranja)}
+.campo textarea{resize:vertical;min-height:96px}
+.campo .ayuda{font-size:.8rem;color:var(--texto-suave);margin-top:.4rem}
+.fotos-grupo{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.dropzone{
+  border:1px dashed var(--borde);border-radius:12px;padding:1rem;
+}
+.dropzone>label.titulo{display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:.92rem;margin-bottom:.8rem}
+.dropzone .contador{font-size:.78rem;color:var(--texto-suave);font-weight:500}
+.miniaturas{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:.8rem}
+.miniaturas:empty{display:none}
+.mini{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;border:1px solid var(--borde)}
+.mini img{width:100%;height:100%;object-fit:cover}
+.mini button{
+  position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;border:none;
+  background:rgba(0,0,0,.7);color:#fff;font-size:1rem;line-height:1;display:grid;place-items:center;
+}
+.mini button:hover{background:var(--err)}
+.add-foto{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;
+  background:var(--negro);border:1px solid var(--borde);border-radius:9px;color:var(--texto-suave);
+  font-size:.88rem;font-weight:600;padding:.7rem;transition:border-color .2s,color .2s;
+}
+.add-foto:hover{border-color:var(--naranja);color:var(--texto)}
+.add-foto:disabled{opacity:.5;cursor:not-allowed}
+.editor-acciones{display:flex;gap:.8rem;margin-top:1.8rem}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--negro-3);border:1px solid var(--borde);border-radius:12px;
+  padding:.9rem 1.4rem;font-size:.9rem;font-weight:600;opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;z-index:300;box-shadow:var(--sombra);max-width:90vw;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.ok{border-color:rgba(52,211,153,.5)}
+#toast.err{border-color:rgba(248,113,113,.5);color:var(--err)}
+
+/* Overlay de carga */
+#cargando{position:fixed;inset:0;background:rgba(5,6,8,.72);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:250;flex-direction:column;gap:1rem}
+#cargando.show{display:flex}
+.spinner{width:42px;height:42px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--naranja);border-radius:50%;animation:girar .8s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+#cargando p{color:var(--texto-suave);font-size:.9rem}
+
+.banner-config{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.4);color:#fca5a5;padding:1rem 1.3rem;border-radius:12px;margin:1.5rem 0;font-size:.9rem}
+
+@media (max-width:620px){
+  .fotos-grupo{grid-template-columns:1fr}
+  .fila{flex-wrap:wrap}
+  .fila-acciones{width:100%;justify-content:flex-end}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="marca">
+    <img src="assets/logo-icon.png" alt="AM TECH Security">
+    <span>AM TECH<small>Panel</small></span>
+  </a>
+  <div class="topbar-user" id="topbar-user" hidden>
+    <span id="user-email"></span>
+    <button class="btn-sec btn-chico" id="btn-logout">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- Vista: login -->
+<section class="vista activa" id="vista-login">
+  <div class="centro">
+    <div class="tarjeta-login">
+      <img class="logo" src="assets/logo-icon.png" alt="AM TECH Security">
+      <h1>Panel de administración</h1>
+      <p>Inicia sesión con tu cuenta corporativa de Google para administrar la galería de proyectos.</p>
+      <button class="btn-google" id="btn-google">
+        <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Iniciar sesión con Google
+      </button>
+      <div class="aviso-err" id="login-err"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Vista: no autorizado -->
+<section class="vista" id="vista-noautorizado">
+  <div class="centro">
+    <div class="tarjeta-login">
+      <img class="logo" src="assets/logo-icon.png" alt="AM TECH Security">
+      <h1>Acceso no autorizado</h1>
+      <p>La cuenta <strong id="email-noauth"></strong> no está en la lista de administradores. Si crees que es un error, contacta al responsable del sitio.</p>
+      <button class="btn-sec" id="btn-logout-2" style="width:100%;justify-content:center;padding:.85rem">Cerrar sesión</button>
+    </div>
+  </div>
+</section>
+
+<!-- Vista: dashboard -->
+<section class="vista" id="vista-dashboard">
+  <main class="contenedor">
+    <div class="banner-config" id="banner-config" hidden>
+      ⚠ Firebase aún no está configurado. Estás viendo el panel en <strong>modo demostración</strong> (los cambios no se guardan). Completa <code>assets/js/firebase-config.js</code> y las reglas para activarlo.
+    </div>
+
+    <!-- Lista -->
+    <div id="panel-lista">
+      <div class="dash-head">
+        <div>
+          <h1>Galería de proyectos</h1>
+          <p id="resumen-conteo">Cargando…</p>
+        </div>
+        <button class="btn" id="btn-nuevo">+ Nuevo proyecto</button>
+      </div>
+      <div class="lista-proyectos" id="lista-proyectos"></div>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor" id="panel-editor" hidden>
+      <h2 id="editor-titulo">Nuevo proyecto</h2>
+      <div class="campo">
+        <label for="in-titulo">Título del proyecto</label>
+        <input type="text" id="in-titulo" maxlength="120" placeholder="Ej: Restaurante Marco Polo — Renovación de CCTV">
+      </div>
+      <div class="campo">
+        <label for="in-resumen">Resumen</label>
+        <textarea id="in-resumen" maxlength="800" placeholder="Describe brevemente el proyecto: qué se hizo, alcance, resultado."></textarea>
+        <div class="ayuda"><span id="cont-resumen">0</span>/800 caracteres</div>
+      </div>
+      <div class="fotos-grupo">
+        <div class="dropzone">
+          <label class="titulo">Fotos «Antes» <span class="contador" id="cont-antes">0/4</span></label>
+          <div class="miniaturas" id="mini-antes"></div>
+          <button type="button" class="add-foto" id="add-antes">+ Agregar foto</button>
+          <input type="file" accept="image/*" multiple hidden id="file-antes">
+        </div>
+        <div class="dropzone">
+          <label class="titulo">Fotos «Después» <span class="contador" id="cont-despues">0/4</span></label>
+          <div class="miniaturas" id="mini-despues"></div>
+          <button type="button" class="add-foto" id="add-despues">+ Agregar foto</button>
+          <input type="file" accept="image/*" multiple hidden id="file-despues">
+        </div>
+      </div>
+      <div class="editor-acciones">
+        <button class="btn" id="btn-guardar">Guardar proyecto</button>
+        <button class="btn-sec" id="btn-cancelar" style="padding:.7rem 1.4rem">Cancelar</button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<div id="cargando"><div class="spinner"></div><p id="cargando-txt">Guardando…</p></div>
+<div id="toast"></div>
+
+<script type="module" src="assets/js/admin.js"></script>
+</body>
+</html>

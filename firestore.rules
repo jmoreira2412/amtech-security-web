@@ -1,0 +1,34 @@
+rules_version = '2';
+
+// ============================================================
+//  Reglas de Firestore — AM TECH Security
+// ============================================================
+//  · Lectura pública de la galería (cualquiera ve los proyectos).
+//  · Escritura SOLO para los correos de la lista blanca, con email
+//    verificado. La lista debe coincidir con ADMIN_EMAILS en
+//    assets/js/firebase-config.js y con storage.rules.
+// ============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function esAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          // >>> REEMPLAZAR con los correos autorizados <<<
+          "REEMPLAZAR@amtechsecurity.net"
+        ];
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;            // galería pública
+      allow create, update, delete: if esAdmin();
+    }
+
+    // Todo lo demás queda bloqueado por defecto.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
