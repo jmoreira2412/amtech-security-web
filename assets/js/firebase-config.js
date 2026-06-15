@@ -15,18 +15,19 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 export const firebaseConfig = {
-  apiKey: "REEMPLAZAR_API_KEY",
-  authDomain: "REEMPLAZAR.firebaseapp.com",
-  projectId: "REEMPLAZAR_PROJECT_ID",
-  storageBucket: "REEMPLAZAR.appspot.com",
-  messagingSenderId: "REEMPLAZAR_SENDER_ID",
-  appId: "REEMPLAZAR_APP_ID"
+  apiKey: "AIzaSyA4HpQfKs2mjucDPMkM9ES5xhCp_ZzhLJA",
+  authDomain: "am-tech-security.firebaseapp.com",
+  projectId: "am-tech-security",
+  storageBucket: "am-tech-security.firebasestorage.app",
+  messagingSenderId: "146445790554",
+  appId: "1:146445790554:web:d354aba54aa5944cbf9763"
 };
 
 // Lista blanca de correos que pueden administrar la galería.
 // IMPORTANTE: debe coincidir con la lista en firestore.rules y storage.rules.
 export const ADMIN_EMAILS = [
-  "REEMPLAZAR@amtechsecurity.net"
+  "jonathan@amtechsecurity.net",
+  "amartinez@amtechsecurity.net"
 ];
 
 // Dominio del Google Workspace (pista para el login de Google).

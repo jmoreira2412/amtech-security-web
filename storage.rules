@@ -18,8 +18,8 @@ service firebase.storage {
       return request.auth != null
         && request.auth.token.email_verified == true
         && request.auth.token.email in [
-          // >>> REEMPLAZAR con los correos autorizados <<<
-          "REEMPLAZAR@amtechsecurity.net"
+          "jonathan@amtechsecurity.net",
+          "amartinez@amtechsecurity.net"
         ];
     }
 
