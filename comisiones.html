@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Programa de Comisiones — AM TECH Security</title>
+<link rel="icon" type="image/png" href="assets/logo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --naranja:#FF7A00;--naranja-claro:#FFA040;--rojo-naranja:#E8470A;
+  --amber:#F59E0B;--azul:#60A5FA;
+  --negro:#0C0D10;--negro-2:#13151A;--negro-3:#1B1E25;--negro-4:#2A2E37;
+  --borde:rgba(255,255,255,.08);--texto:#E8EAEE;--texto-suave:#9AA1AC;--tenue:#6B7280;
+  --grad:linear-gradient(135deg,#FFA040 0%,#FF7A00 45%,#E8470A 100%);--radio:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--negro);color:var(--texto);line-height:1.6;min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--naranja);text-decoration:none}
+.contenedor{width:min(960px,94%);margin:0 auto}
+
+/* Topbar */
+.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 5%;background:rgba(12,13,16,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--borde)}
+.topbar .marca{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:.95rem}
+.topbar .marca img{width:32px;height:32px}
+.topbar-acc{display:flex;align-items:center;gap:1rem;font-size:.85rem;color:var(--texto-suave)}
+.btn-sec{background:none;border:1px solid var(--borde);color:var(--texto);font-weight:600;font-size:.82rem;padding:.5rem 1rem;border-radius:9px;transition:border-color .2s}
+.btn-sec:hover{border-color:var(--naranja)}
+
+/* Vistas (gate de acceso) */
+.vista{display:none}
+.vista.activa{display:block}
+.centro{min-height:calc(100vh - 62px);display:flex;align-items:center;justify-content:center;padding:2rem}
+.tarjeta-login{background:var(--negro-2);border:1px solid var(--borde);border-radius:var(--radio);padding:2.8rem 2.4rem;text-align:center;max-width:420px;width:100%}
+.tarjeta-login img.logo{width:70px;margin:0 auto 1.3rem}
+.tarjeta-login h1{font-size:1.35rem;font-weight:800;margin-bottom:.5rem}
+.tarjeta-login p{color:var(--texto-suave);font-size:.93rem;margin-bottom:1.6rem}
+.btn-google{display:inline-flex;align-items:center;gap:.7rem;width:100%;justify-content:center;background:#fff;color:#1f1f1f;font-weight:600;font-size:.96rem;border:none;padding:.85rem 1.4rem;border-radius:11px;transition:filter .2s}
+.btn-google:hover{filter:brightness(.95)}
+.btn-google svg{width:20px;height:20px}
+.aviso-err{color:#F87171;font-size:.88rem;margin-top:1rem;min-height:1.1em}
+
+/* Contenido */
+main{padding:34px 0 64px}
+.cab{text-align:center;margin-bottom:1.8rem}
+.cab .tag{color:var(--naranja);font-size:.7rem;letter-spacing:.32em;text-transform:uppercase}
+.cab h1{font-size:1.7rem;font-weight:800;margin:.3rem 0 .2rem}
+.cab .sub{color:var(--tenue);font-size:.85rem}
+.cab .linea{width:46px;height:3px;background:var(--grad);border-radius:2px;margin:.8rem auto 0}
+
+.perfiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:1.8rem}
+.perfil{background:var(--negro-2);border:1px solid var(--borde);border-top:3px solid var(--c);border-radius:10px;padding:1.1rem}
+.perfil .ic{font-size:1.5rem;margin-bottom:.4rem}
+.perfil .nom{color:var(--c);font-weight:700;font-size:.92rem;margin-bottom:.4rem}
+.perfil .d{font-size:.8rem;color:var(--texto-suave);line-height:1.5;margin-bottom:.5rem}
+.perfil .ej{font-size:.74rem;color:var(--tenue);font-style:italic;line-height:1.45}
+
+.tabs{display:flex;gap:.6rem;margin-bottom:1.1rem;flex-wrap:wrap}
+.tabs button{padding:.6rem 1.1rem;border-radius:8px;border:none;font-size:.85rem;font-weight:700;background:var(--negro-3);color:var(--texto-suave);transition:background .2s,color .2s}
+.tabs button.activo{background:var(--grad);color:#fff}
+
+.tabla-wrap{background:var(--negro-2);border:1px solid var(--borde);border-radius:12px;overflow:hidden;margin-bottom:1.4rem}
+.scroll-x{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px}
+thead tr{background:var(--negro-3)}
+th{padding:.7rem .9rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:.7rem .9rem;font-size:.86rem}
+tbody tr{border-top:1px solid var(--negro-3)}
+tbody tr:nth-child(even){background:#101216}
+.col-ref{color:var(--amber)}
+.col-ally{color:var(--azul)}
+.col-rep{color:var(--naranja)}
+.nivel-nota{display:block;font-size:.68rem;color:var(--tenue);font-weight:400}
+.t-c{text-align:center;font-weight:700}
+.t-l{text-align:left}.t-r{text-align:right}
+
+.bloque{background:var(--negro-2);border:1px solid var(--borde);border-radius:12px;padding:1.3rem;margin-bottom:1.4rem}
+.bloque .tit{color:var(--naranja);font-weight:700;font-size:.9rem;margin-bottom:1rem}
+.calc-row{display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap}
+.calc-row > div{flex:1;min-width:155px}
+.calc-row label{display:block;font-size:.74rem;color:var(--tenue);margin-bottom:.4rem}
+.calc-row input,.calc-row select{width:100%;padding:.6rem .8rem;background:var(--negro-3);border:1px solid var(--negro-4);border-radius:8px;color:#fff;font-size:.92rem;font-family:inherit}
+.calc-out{text-align:center;background:var(--negro-3);border-radius:10px;padding:.9rem}
+.calc-out .lab{font-size:.66rem;color:var(--tenue);letter-spacing:.5px}
+.calc-out .monto{font-size:1.7rem;font-weight:800;color:var(--naranja);line-height:1.2}
+.calc-out .nota{font-size:.7rem;color:var(--tenue)}
+
+.reglas{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
+.regla{display:flex;gap:.6rem;font-size:.83rem;color:var(--texto-suave);line-height:1.5}
+.regla .ri{font-size:1rem;flex-shrink:0}
+
+.info-mensual{background:var(--negro-3);border-radius:10px;padding:1.1rem;margin-bottom:1.4rem}
+.info-mensual .tit{color:var(--naranja);font-size:.85rem;font-weight:700;margin-bottom:.5rem}
+.info-mensual p{color:var(--texto-suave);font-size:.85rem;line-height:1.6}
+
+.pie{text-align:center;border-top:1px solid var(--negro-3);padding-top:1.1rem;color:var(--tenue)}
+.pie p{font-size:.72rem;margin-bottom:.2rem}
+
+@media (max-width:680px){
+  .perfiles{grid-template-columns:1fr}
+  .reglas{grid-template-columns:1fr}
+  .topbar .marca span.full{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="marca"><img src="assets/logo-icon.png" alt="AM TECH"><span class="full">AM TECH Security</span></a>
+  <div class="topbar-acc" id="topbar-user" hidden>
+    <a href="admin.html" class="btn-sec">← Panel</a>
+    <span id="user-email"></span>
+    <button class="btn-sec" id="btn-logout">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- Vista: login -->
+<section class="vista activa" id="vista-login">
+  <div class="centro">
+    <div class="tarjeta-login">
+      <img class="logo" src="assets/logo-icon.png" alt="AM TECH Security">
+      <h1>Programa de Comisiones</h1>
+      <p>Contenido privado. Inicia sesión con tu cuenta corporativa de AM TECH Security para verlo.</p>
+      <button class="btn-google" id="btn-google">
+        <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Iniciar sesión con Google
+      </button>
+      <div class="aviso-err" id="login-err"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Vista: no autorizado -->
+<section class="vista" id="vista-noautorizado">
+  <div class="centro">
+    <div class="tarjeta-login">
+      <img class="logo" src="assets/logo-icon.png" alt="AM TECH Security">
+      <h1>Acceso no autorizado</h1>
+      <p>La cuenta <strong id="email-noauth"></strong> no está autorizada para ver este contenido.</p>
+      <button class="btn-google" id="btn-logout-2" style="background:var(--negro-3);color:var(--texto)">Cerrar sesión</button>
+    </div>
+  </div>
+</section>
+
+<!-- Vista: contenido -->
+<section class="vista" id="vista-contenido">
+  <main class="contenedor">
+    <div class="cab">
+      <div class="tag">AM TECH Security</div>
+      <h1>Programa de Comisiones</h1>
+      <div class="sub">Referidos y Ventas · Panamá</div>
+      <div class="linea"></div>
+    </div>
+
+    <!-- Perfiles -->
+    <div class="perfiles">
+      <div class="perfil" style="--c:var(--amber)">
+        <div class="ic">🤝</div>
+        <div class="nom">Referente</div>
+        <p class="d">Da el contacto. AMTECH hace todo lo demás.</p>
+        <p class="ej">Amigo, familiar, vecino, electricista o conocido que menciona AMTECH a quien lo necesita.</p>
+      </div>
+      <div class="perfil" style="--c:var(--azul)">
+        <div class="ic">🔗</div>
+        <div class="nom">Aliado Comercial</div>
+        <p class="d">Promueve AMTECH activamente y facilita la reunión.</p>
+        <p class="ej">Arquitectos, administradores de PH, contratistas o empresas que nos incluyen en sus proyectos.</p>
+      </div>
+      <div class="perfil" style="--c:var(--naranja)">
+        <div class="ic">🏆</div>
+        <div class="nom">Rep. de Ventas</div>
+        <p class="d">Gestiona todo el ciclo: prospección, propuesta y cierre.</p>
+        <p class="ej">Persona que vende AMTECH de manera activa y directa como actividad regular.</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button id="tab-proyectos" class="activo">🏗️ Proyectos de Instalación</button>
+      <button id="tab-mensuales">📅 Contratos Mensuales</button>
+    </div>
+
+    <!-- Tabla proyectos -->
+    <div class="tabla-wrap" id="tabla-proyectos">
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th class="t-l col-rep">Nivel</th><th class="t-l" style="color:var(--tenue)">Valor</th>
+          <th class="t-c col-ref">🤝 Referente</th><th class="t-c col-ally">🔗 Aliado</th><th class="t-c col-rep">🏆 Rep. Ventas</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Básico<span class="nivel-nota">Monto fijo</span></td><td style="color:var(--texto-suave)">B/. 300 – 999</td><td class="t-c col-ref">B/. 30</td><td class="t-c col-ally">B/. 55</td><td class="t-c col-rep">B/. 90</td></tr>
+          <tr><td style="font-weight:600">Pequeño</td><td style="color:var(--texto-suave)">B/. 1,000 – 2,499</td><td class="t-c col-ref">4%</td><td class="t-c col-ally">6%</td><td class="t-c col-rep">10%</td></tr>
+          <tr><td style="font-weight:600">Mediano</td><td style="color:var(--texto-suave)">B/. 2,500 – 4,999</td><td class="t-c col-ref">4%</td><td class="t-c col-ally">6%</td><td class="t-c col-rep">10%</td></tr>
+          <tr><td style="font-weight:600">Grande</td><td style="color:var(--texto-suave)">B/. 5,000 – 9,999</td><td class="t-c col-ref">3%</td><td class="t-c col-ally">5%</td><td class="t-c col-rep">8%</td></tr>
+          <tr><td style="font-weight:600">Corporativo<span class="nivel-nota">Negociable</span></td><td style="color:var(--texto-suave)">B/. 10,000+</td><td class="t-c col-ref">2.5%</td><td class="t-c col-ally">4%</td><td class="t-c col-rep">7%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- Tabla mensuales -->
+    <div class="tabla-wrap" id="tabla-mensuales" hidden>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th class="t-l col-rep">Nivel</th><th class="t-l" style="color:var(--tenue)">Valor</th>
+          <th class="t-c col-ref">🤝 Referente</th><th class="t-c col-ally">🔗 Aliado</th><th class="t-c col-rep">🏆 Rep. Ventas</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Básico<span class="nivel-nota">Pago único al firmar contrato</span></td><td style="color:var(--texto-suave)">B/. 60 – 100/mes</td><td class="t-c col-ref">B/. 30</td><td class="t-c col-ally">B/. 50</td><td class="t-c col-rep">B/. 80</td></tr>
+          <tr><td style="font-weight:600">Estándar<span class="nivel-nota">Pago único al firmar contrato</span></td><td style="color:var(--texto-suave)">B/. 101 – 200/mes</td><td class="t-c col-ref">B/. 50</td><td class="t-c col-ally">B/. 80</td><td class="t-c col-rep">B/. 120</td></tr>
+          <tr><td style="font-weight:600">Premium<span class="nivel-nota">Pago único al firmar contrato</span></td><td style="color:var(--texto-suave)">B/. 201+/mes</td><td class="t-c col-ref">B/. 80</td><td class="t-c col-ally">B/. 120</td><td class="t-c col-rep">B/. 180</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- Calculadora -->
+    <div class="bloque" id="bloque-calculadora">
+      <div class="tit">💰 Calculadora de Comisión</div>
+      <div class="calc-row">
+        <div>
+          <label for="calc-valor">Valor del Proyecto (B/.)</label>
+          <input type="number" id="calc-valor" min="0" value="1500">
+        </div>
+        <div>
+          <label for="calc-perfil">Tu Perfil</label>
+          <select id="calc-perfil">
+            <option value="ref">🤝 Referente</option>
+            <option value="ally">🔗 Aliado Comercial</option>
+            <option value="rep" selected>🏆 Rep. de Ventas</option>
+          </select>
+        </div>
+        <div class="calc-out">
+          <div class="lab">TU COMISIÓN</div>
+          <div class="monto" id="calc-monto">—</div>
+          <div class="nota" id="calc-nota"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ejemplos -->
+    <div class="tabla-wrap" id="bloque-ejemplos">
+      <div style="background:var(--negro-3);padding:.7rem .9rem"><span style="color:var(--naranja);font-weight:700;font-size:.8rem">📌 EJEMPLOS REALES EN PANAMÁ</span></div>
+      <div class="scroll-x"><table>
+        <thead><tr>
+          <th class="t-l" style="color:var(--tenue)">Caso</th><th class="t-r" style="color:var(--tenue)">Proyecto</th>
+          <th class="t-c col-ref">Referente</th><th class="t-c col-ally">Aliado</th><th class="t-c col-rep">Rep.</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="color:var(--texto-suave)">Sistema CCTV para restaurante</td><td class="t-r" style="color:var(--tenue)">B/. 1,200</td><td class="t-c col-ref">B/. 48</td><td class="t-c col-ally">B/. 72</td><td class="t-c col-rep">B/. 120</td></tr>
+          <tr><td style="color:var(--texto-suave)">Red WiFi + cableado oficina</td><td class="t-r" style="color:var(--tenue)">B/. 2,800</td><td class="t-c col-ref">B/. 112</td><td class="t-c col-ally">B/. 168</td><td class="t-c col-rep">B/. 280</td></tr>
+          <tr><td style="color:var(--texto-suave)">Sistema integral PH mediano</td><td class="t-r" style="color:var(--tenue)">B/. 7,500</td><td class="t-c col-ref">B/. 225</td><td class="t-c col-ally">B/. 375</td><td class="t-c col-rep">B/. 600</td></tr>
+          <tr><td style="color:var(--texto-suave)">Proyecto corporativo completo</td><td class="t-r" style="color:var(--tenue)">B/. 12,000</td><td class="t-c col-ref">B/. 300</td><td class="t-c col-ally">B/. 480</td><td class="t-c col-rep">B/. 840</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- Info mensual -->
+    <div class="info-mensual" id="bloque-mensual-info" hidden>
+      <div class="tit">ℹ️ ¿Cómo funciona la comisión mensual?</div>
+      <p>Cuando refieres o cierras un contrato de mantenimiento mensual, recibes un pago único al momento en que el cliente firma y paga su primera mensualidad. No hay comisión recurrente mensual, pero el bono por cliente es inmediato. Un aliado que cierre 5 contratos básicos en un mes gana B/. 400 de una sola vez.</p>
+    </div>
+
+    <!-- Reglas -->
+    <div class="bloque">
+      <div class="tit">📋 Condiciones del Programa</div>
+      <div class="reglas">
+        <div class="regla"><span class="ri">💳</span><span>La comisión se paga una vez que el cliente realiza su pago, no antes.</span></div>
+        <div class="regla"><span class="ri">📋</span><span>El referido debe registrarse antes de que AMTECH tenga contacto previo con ese cliente.</span></div>
+        <div class="regla"><span class="ri">⏱️</span><span>El lead tiene vigencia de 60 días. Si no cierra en ese plazo, la comisión no aplica.</span></div>
+        <div class="regla"><span class="ri">📑</span><span>El porcentaje se aplica sobre el valor total facturado al cliente.</span></div>
+        <div class="regla"><span class="ri">🔄</span><span>Las comisiones de contratos mensuales son pagos únicos al firmar el contrato.</span></div>
+        <div class="regla"><span class="ri">🏦</span><span>Pago por transferencia o efectivo, según acuerdo con AMTECH.</span></div>
+        <div class="regla"><span class="ri">🎯</span><span>3 o más cierres en el mismo mes: bonificación adicional de B/. 75.</span></div>
+        <div class="regla"><span class="ri">📊</span><span>Proyectos de B/. 10,000+ se negocian directamente con la dirección.</span></div>
+      </div>
+    </div>
+
+    <!-- Pie -->
+    <div class="pie">
+      <p>AM TECH Security · info@amtechsecurity.net · +507 6841-3993 · www.amtechsecurity.net</p>
+      <p>Programa vigente a partir de junio <span id="anio"></span> · Sujeto a revisión · Protegemos. Conectamos. Aseguramos.</p>
+    </div>
+  </main>
+</section>
+
+<script type="module" src="assets/js/comisiones.js"></script>
+</body>
+</html>
