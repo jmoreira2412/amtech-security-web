@@ -233,6 +233,8 @@ header{
   transition:filter .25s,opacity .25s;
 }
 .marca-item:hover img{filter:brightness(0) invert(1);opacity:1}
+.marca-item .wm-mini{font-weight:800;font-size:1.05rem;letter-spacing:.02em;color:var(--texto-suave);transition:color .25s}
+.marca-item:hover .wm-mini{color:#fff}
 
 /* ===== PROYECTOS (galería) ===== */
 .proyectos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.6rem;margin-top:3rem}
@@ -386,6 +388,7 @@ footer p{font-size:.85rem;color:var(--texto-suave)}
       <a href="#servicios">Servicios</a>
       <a href="#metodo">Nuestro Método</a>
       <a href="#segmentos">Soluciones</a>
+      <a href="/marcas/">Marcas</a>
       <a href="#proyectos" id="nav-proyectos" hidden>Proyectos</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#contacto">Contacto</a>
@@ -575,21 +578,21 @@ footer p{font-size:.85rem;color:var(--texto-suave)}
     <h2>Trabajamos con <span class="grad-texto">líderes mundiales</span></h2>
     <p class="sub">Seleccionamos cada marca por su soporte local, garantía, escalabilidad y relación costo-beneficio.</p>
     <div class="marcas-grid revelar">
-      <div class="marca-item" title="Hikvision"><img src="assets/marcas/hikvision.svg" alt="Hikvision" loading="lazy"></div>
-      <div class="marca-item" title="Dahua"><img src="assets/marcas/dahua.svg" alt="Dahua" loading="lazy"></div>
-      <div class="marca-item" title="Axis Communications"><img src="assets/marcas/axis.svg" alt="Axis Communications" loading="lazy"></div>
-      <div class="marca-item" title="Ubiquiti UniFi"><img src="assets/marcas/ubiquiti.svg" alt="Ubiquiti UniFi" loading="lazy"></div>
-      <div class="marca-item" title="ZKTeco"><img src="assets/marcas/zkteco.png" alt="ZKTeco" loading="lazy"></div>
-      <div class="marca-item" title="Fortinet"><img src="assets/marcas/fortinet.svg" alt="Fortinet" loading="lazy"></div>
-      <div class="marca-item" title="Sophos"><img src="assets/marcas/sophos.svg" alt="Sophos" loading="lazy"></div>
-      <div class="marca-item" title="TP-Link Omada"><img src="assets/marcas/tplink.svg" alt="TP-Link Omada" loading="lazy"></div>
-      <div class="marca-item" title="Microsoft"><img src="assets/marcas/microsoft.svg" alt="Microsoft" loading="lazy"></div>
-      <div class="marca-item" title="Acronis"><img src="assets/marcas/acronis.svg" alt="Acronis" loading="lazy"></div>
-      <div class="marca-item" title="Cisco"><img src="assets/marcas/cisco.svg" alt="Cisco" loading="lazy"></div>
-      <div class="marca-item" title="HP"><img src="assets/marcas/hp.svg" alt="HP" loading="lazy"></div>
-      <div class="marca-item" title="CommScope"><img src="assets/marcas/commscope.svg" alt="CommScope" loading="lazy"></div>
-      <div class="marca-item" title="Panduit"><img src="assets/marcas/panduit.svg" alt="Panduit" loading="lazy"></div>
-      <div class="marca-item" title="Leviton"><img src="assets/marcas/leviton.svg" alt="Leviton" loading="lazy"></div>
+      <a class="marca-item" href="/marcas/hikvision/" title="Hikvision"><img src="assets/marcas/hikvision.svg" alt="Hikvision" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/dahua/" title="Dahua"><img src="assets/marcas/dahua.svg" alt="Dahua" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/unifi/" title="Ubiquiti UniFi"><img src="assets/marcas/ubiquiti.svg" alt="Ubiquiti UniFi" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/meraki/" title="Cisco Meraki"><span class="wm-mini">Meraki</span></a>
+      <a class="marca-item" href="/marcas/fortinet/" title="Fortinet"><img src="assets/marcas/fortinet.svg" alt="Fortinet" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/microsoft/" title="Microsoft"><img src="assets/marcas/microsoft.svg" alt="Microsoft" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/dell/" title="Dell"><img src="assets/marcas/dell.svg" alt="Dell" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/hp/" title="HP"><img src="assets/marcas/hp.svg" alt="HP" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/apc/" title="APC by Schneider Electric"><span class="wm-mini">APC</span></a>
+      <a class="marca-item" href="/marcas/commscope/" title="CommScope"><img src="assets/marcas/commscope.svg" alt="CommScope" loading="lazy"></a>
+      <a class="marca-item" href="/marcas/superior/" title="Superior"><span class="wm-mini">Superior</span></a>
+      <a class="marca-item" href="/marcas/cablofil/" title="Cablofil"><span class="wm-mini">Cablofil</span></a>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="/marcas/" class="btn-borde">Ver todas las marcas →</a>
     </div>
   </div>
 </section>
