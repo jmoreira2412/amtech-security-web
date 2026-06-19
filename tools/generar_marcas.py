@@ -31,7 +31,6 @@ BRANDS = {
     "segment": ["Comercios", "Residencial", "PH", "Oficinas"],
     "desc": "Hikvision es el fabricante de videovigilancia número uno a nivel mundial, con presencia y soporte local en Panamá. AMTECH trabaja con Hikvision como marca principal para proyectos de entrada y mediano tamaño, cubriendo el 70% de los requerimientos de videovigilancia del mercado panameño.",
     "apps": ["Cámaras IP y analógicas 2MP–8MP (Bullet, Dome, PTZ)", "DVR / NVR con analítica de vídeo básica", "Control de acceso biométrico y por tarjeta", "Videoporteros DS-KH y video intercomunicadores", "Cámaras con detección de rostros y lectura de placas (LPR)", "Alarmas, sensores y sirenas"],
-    "range": "B/. 300 – B/. 6,000",
     "notas": [("Por qué AMTECH la eligió", "Disponibilidad local garantizada, repuestos en Panamá, amplio catálogo y precio competitivo para proyectos SMB.")],
 },
 "dahua": {
@@ -40,7 +39,6 @@ BRANDS = {
     "segment": ["Comercios", "Residencial", "PH", "Oficinas"],
     "desc": "Dahua Technology es una de las marcas de videovigilancia con mayor crecimiento en Panamá, ofreciendo analítica inteligente de IA bajo su línea WizSense a precios accesibles para el mercado local.",
     "apps": ["Cámaras IP y HDCVI Full-Color con IA (WizSense)", "DVR / NVR WizSense con analítica inteligente", "Control de acceso con reconocimiento facial", "Videoporteros y video comunicadores IP", "Barreras vehiculares con LPR integrado", "Cámaras térmicas de entrada"],
-    "range": "B/. 300 – B/. 6,000",
     "notas": [("Por qué AMTECH la eligió", "Alternativa de calidad a Hikvision con mayor énfasis en IA integrada a precio accesible.")],
 },
 "unifi": {
@@ -53,7 +51,6 @@ BRANDS = {
         "Infraestructura Tecnológica": ["Switches PoE 8–48 puertos (USW series)", "APs WiFi 6/6E de alta densidad (U6-Lite, U6-Pro, U6-Mesh)", "Gateways UniFi (UDR, UDM-SE, UDM-Pro) con firewall integrado", "VLANs, QoS y segmentación de red", "Redes mesh para cobertura multi-piso"],
         "Ciberseguridad (capa base)": ["Segmentación de red con VLANs (datos, cámaras, invitados, IoT)", "Reglas de firewall y control de tráfico entre subredes", "IDS/IPS básico en UDM-Pro y UDM-SE", "Portal cautivo para WiFi de invitados", "Fundación segura de red antes de escalar a Fortinet"],
     },
-    "range": "B/. 2,500 – B/. 12,000 (seguridad)",
     "notas": [("Por qué AMTECH la eligió", "El ecosistema más rentable y completo para proyectos SMB. Una sola plataforma para toda la tecnología del cliente.")],
 },
 "meraki": {
@@ -66,7 +63,6 @@ BRANDS = {
         "Infraestructura Tecnológica": ["Switches MS series cloud-managed (acceso, distribución, core)", "APs MR series WiFi 6/6E enterprise", "Routers MX series con SD-WAN integrado", "Dashboard global centralizado con analítica de red", "Licencias anuales por dispositivo (modelo SaaS)"],
         "Ciberseguridad": ["MX Security Appliances – NGFW cloud-managed", "Advanced Malware Protection (AMP) con Cisco Talos", "Filtrado de contenido web y control de aplicaciones", "SD-WAN seguro con failover automático", "VPN site-to-site y client-to-site desde dashboard"],
     },
-    "range": "B/. 8,000 – B/. 25,000+ (seguridad)",
     "notas": [("Modelo comercial", "Hardware + licencias anuales por dispositivo — renovación recurrente."), ("Por qué AMTECH la eligió", "La solución enterprise más completa para clientes corporativos y multi-sede con Cisco como estándar.")],
 },
 "fortinet": {
@@ -222,7 +218,6 @@ def render_subpage(slug, b):
         for lab, txt in b["notas"]
     )
     tags = "".join(f"<span>{E(s)}</span>" for s in b["segment"])
-    rango = f'<div class="meta-bloque"><div class="et">Rango de proyecto</div><div class="rango">{E(b["range"])}</div></div>' if b.get("range") else ""
 
     return f"""{head(title, desc, canonical)}
 {header(marcas_activa=True)}
@@ -237,7 +232,6 @@ def render_subpage(slug, b):
     <div class="meta-row">
       <div class="meta-bloque"><div class="et">Tier</div><span class="tier">{E(b["badge"])}</span></div>
       <div class="meta-bloque"><div class="et">Segmento objetivo</div><div class="tags">{tags}</div></div>
-      {rango}
     </div>
   </section>
 
