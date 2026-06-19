@@ -217,7 +217,6 @@ def render_subpage(slug, b):
         f'<div class="nota-box"><div class="et">{E(lab)}</div><p>{E(txt)}</p></div>'
         for lab, txt in b["notas"]
     )
-    tags = "".join(f"<span>{E(s)}</span>" for s in b["segment"])
 
     return f"""{head(title, desc, canonical)}
 {header(marcas_activa=True)}
@@ -225,14 +224,10 @@ def render_subpage(slug, b):
   <nav class="breadcrumb"><a href="/">Inicio</a><span>›</span><a href="/marcas/">Marcas</a><span>›</span>{E(vert)}<span>›</span>{E(b["name"])}</nav>
 
   <section class="marca-hero">
-    <div class="eyebrow">{E(verts_txt)} · {E(b["tier"])}</div>
+    <div class="eyebrow">{E(verts_txt)}</div>
     {marca_visual}
     <h1>{E(b["name"])}</h1>
     <p class="desc">{E(b["desc"])}</p>
-    <div class="meta-row">
-      <div class="meta-bloque"><div class="et">Tier</div><span class="tier">{E(b["badge"])}</span></div>
-      <div class="meta-bloque"><div class="et">Segmento objetivo</div><div class="tags">{tags}</div></div>
-    </div>
   </section>
 
   <section class="aplicaciones">
@@ -269,7 +264,6 @@ def render_hub():
             cards.append(f"""      <a class="marca-card" href="/marcas/{slug}/">
         {logo_html_card(b)}
         <h3>{E(b["name"])}</h3>
-        <span class="tier">{E(b["badge"])}</span>
         <span class="ver">Ver soluciones →</span>
       </a>""")
         secciones.append(f"""  <section class="vertical">
