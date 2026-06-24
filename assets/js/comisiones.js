@@ -120,7 +120,7 @@ function cargarLogo() {
 async function generarPDF() {
   const btn = $("btn-pdf");
   if (!window.jspdf || !window.jspdf.jsPDF) {
-    if (btn) btn.textContent = "Error: librería no cargó";
+    alert("No se pudo cargar el generador de PDF. Recarga la página e inténtalo de nuevo.");
     return;
   }
   const txtOriginal = btn ? btn.innerHTML : "";
@@ -333,6 +333,7 @@ async function generarPDF() {
     doc.save("AMTECH-Programa-de-Comisiones.pdf");
   } catch (e) {
     console.error("Error generando PDF:", e);
+    alert("Ocurrió un error al generar el PDF. Intenta de nuevo.\n\nDetalle: " + (e && e.message ? e.message : String(e)));
   } finally {
     if (btn) { btn.disabled = false; btn.innerHTML = txtOriginal; }
   }
